@@ -1,0 +1,30 @@
+#!/usr/bin/env bash
+
+getswayvars() {
+	local prefix
+	prefix="${*:-}"
+
+	local -a logs
+	readarray -t logs < <(sway --validate --verbose 2>&1)
+
+	local pattern
+	pattern='[[:blank:]]*set[[:blank:]]*\$([[:graph:]]+)[[:blank:]]*(.+)$'
+
+	local -A SWAYVARS
+	for line in "${logs[@]}"
+	do
+		if [[ "$line" =~ $pattern ]]
+		then
+			SWAYVARS+=(["${prefix}${BASH_REMATCH[1]}"]="${BASH_REMATCH[2]}")
+		fi
+	done
+	 
+	echo "${SWAYVARS[@]@A}"
+	return
+}
+
+# If not return, then not in function or script (so called directly)
+if ! return 2>/dev/null
+then
+	getswayvars "${*}"
+fi
