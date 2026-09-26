@@ -2,8 +2,8 @@
 
 `swayvars` is a small Bash script that contains `getswayvars()`, a function that
 gathers the variables from your Sway configuration file using `sway --verbose
---validate` and places it into an associative array. If called directly from the
-terminal, `swayvars` will output your Sway variables using `@A` parameter
+--validate` and places them into an associative array. If called directly from
+the terminal, `swayvars` will output your Sway variables using `@A` parameter
 transformation (see `man bash`). To use this program, redirect it's output to a
 file, and `source` that file in another script.
 
